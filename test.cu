@@ -31,7 +31,7 @@ int main() {
     size_t size_pixels = 3*num_pixels*sizeof(float);
     
     float *pixel;
-    checkCudaErrors(cudaMallocManaged((void **)&pixel, size_pixels));
+    cudaMallocManaged((void **)&pixel, size_pixels);
 
     // definindo o tamanho do bloco
     dim3 blocks(nx/8+1,ny/8+1);
@@ -39,8 +39,8 @@ int main() {
     dim3 threads(8,8);
     // chamando o kernel
     kernel_function<<<blocks, threads>>>(pixel, nx, ny);
-    checkCudaErrors(cudaGetLastError());
-    checkCudaErrors(cudaDeviceSynchronize());
+    cudaGetLastError();
+    cudaDeviceSynchronize();
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
     
     for (int j = ny-1; j >= 0; j--) {
@@ -55,7 +55,7 @@ int main() {
             std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
-    checkCudaErrors(cudaFree(pixel));
+    cudaFree(pixel);
 }
 
 
