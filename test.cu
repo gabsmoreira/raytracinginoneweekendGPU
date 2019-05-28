@@ -17,7 +17,7 @@ __global__ void kernel_function(float *pixel, int lenX, int lenY){
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int index;
-    if((i >= max_x) || (j >= max_y)) return;
+    if((i >= lenX) || (j >= lenY)) return;
     index = i*3 + j*lenX*3;
     pixel[index + 0] = float(i) / lenX;
     pixel[index + 1] = float(j) / lenY;
