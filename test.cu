@@ -7,8 +7,8 @@ __global__ void kernel_function(float *pixel, int lenX, int lenY){
     int index;
     if(i < lenX && j < lenY){
         index = i*3 + j*lenX*3;
-        pixel[index + 0] = float(i) / max_x;
-        pixel[index + 1] = float(j) / max_y;
+        pixel[index + 0] = float(i) / lenX;
+        pixel[index + 1] = float(j) / lenY;
         pixel[index + 2] = 0.2;
     }
     else{
