@@ -1,3 +1,5 @@
+#include <iostream>
+
 int main() {
     int nx = 120;
     int ny = 80;
