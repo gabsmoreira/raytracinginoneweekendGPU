@@ -29,7 +29,7 @@ int main() {
     // definindo o tamanho do bloco
     dim3 blocks(nx/8+1,ny/8+1);
     // definindo threads
-    dim3 threads(tx,ty);
+    dim3 threads(8,8);
     // chamando o kernel
     kernel_function<<<blocks, threads>>>(pixel, nx, ny);
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
