@@ -23,7 +23,7 @@ int main() {
     float *pixel;
 
     // definindo o tamanho do bloco
-    dim3 blocks(nx/tx+1,ny/ty+1);
+    dim3 blocks(nx/8+1,ny/8+1);
     // definindo threads
     dim3 threads(tx,ty);
     // chamando o kernel
@@ -33,9 +33,9 @@ int main() {
     for (int j = ny-1; j >= 0; j--) {
         for (int i = 0; i < nx; i++) {
             int index = j*3*nx + i*3;
-            float r = fb[index + 0];
-            float g = fb[index + 1];
-            float b = fb[index + 2];
+            float r = pixel[index + 0];
+            float g = pixel[index + 1];
+            float b = pixel[index + 2];
             int ir = int(255.99*r); 
             int ig = int(255.99*g); 
             int ib = int(255.99*b); 
