@@ -24,7 +24,7 @@ int main() {
     size_t size_pixels = 3*num_pixels*sizeof(float);
     
     float *pixel;
-    checkCudaErrors(cudaMallocManaged((void **)&pixel, size_pixels));
+    cudaMallocManaged((void **)&pixel, size_pixels);
 
     // definindo o tamanho do bloco
     dim3 blocks(nx/8+1,ny/8+1);
