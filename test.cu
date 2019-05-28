@@ -20,7 +20,11 @@ __global__ void kernel_function(float *pixel, int lenX, int lenY){
 int main() {
     int nx = 120;
     int ny = 80;
+    int num_pixels = nx*ny;
+    size_t size_pixels = 3*num_pixels*sizeof(float);
+    
     float *pixel;
+    checkCudaErrors(cudaMallocManaged((void **)&pixel, size_pixels));
 
     // definindo o tamanho do bloco
     dim3 blocks(nx/8+1,ny/8+1);
