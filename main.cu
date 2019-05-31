@@ -46,8 +46,13 @@ __global__ void kernel_init(hitable **list, hitable **world){
 }
 
 int main() {
-    int nx = 120;
-    int ny = 80;
+    float milliseconds = 0;
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+
+
+    int nx = 480;
+    int ny = 320;
     int num_pixels = nx * ny;
     size_t size_pixels = 3 * num_pixels*sizeof(float);
     size_t size_list = 4 * sizeof(hitable *);
@@ -75,7 +80,6 @@ int main() {
     cudaGetLastError();
     // chamando a funcao que calcula os pixels
     kernel_function<<<blocks, threads>>>(pixels, nx, ny, world);
-    cudaDeviceSynchronize();
     // memcopy do pixel device -> host
     cudaMemcpy(pixelsCPU, pixels, size_pixels, cudaMemcpyDeviceToHost);
 
@@ -93,4 +97,8 @@ int main() {
             std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
+    cudaEventCreate(&stop);
+    cudaEventElapsedTime(&milliseconds, start, stop);
+    std::cerr << "milliseconds: " << milliseconds << "\n";
+
 }
