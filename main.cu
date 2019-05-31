@@ -39,7 +39,7 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
 __global__ void kernel_init(hitable *list, hitable *world){
     list[0] = new sphere(vec3(0,0,-1), 0.5);
     list[1] = new sphere(vec3(0,-100.5,-1), 100);
-    world = new hitable_list(list,2);
+    world = new hitable_list(list, 2);
 }
 
 int main() {
@@ -47,8 +47,8 @@ int main() {
     int ny = 80;
     int num_pixels = nx*ny;
     size_t size_pixels = 3*num_pixels*sizeof(float);
-    size_t size_list = 2*sizeof(hitable);
-    size_t size_world = sizeof(hitable);
+    size_t size_list = 2*sizeof(hitable *);
+    size_t size_world = sizeof(hitable *);
     
     float *pixels;
     float *pixelsCPU;
