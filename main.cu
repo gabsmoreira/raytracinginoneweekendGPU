@@ -69,10 +69,10 @@ int main() {
 
     // chamando o kernel init para criar hitable list e world
     kernel_init<<<1, 1>>>(&list, world);
-    printf('antes\n');
+    printf("antes\n");
     // sincronizar kernels
     cudaDeviceSynchronize();
-    printf('depois\n');
+    printf("depois\n");
     // chamando a funcao que calcula os pixels
     kernel_function<<<blocks, threads>>>(pixels, nx, ny, world, &list);
 
