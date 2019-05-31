@@ -2,6 +2,8 @@
 #include "sphere.h"
 #include "hitable_list.h"
 #include "float.h"
+#include <chrono>
+#include <unistd.h>
 
 __device__ vec3 color(const ray& r, hitable *world) {
     hit_record rec;
@@ -46,12 +48,7 @@ __global__ void kernel_init(hitable **list, hitable **world){
 }
 
 int main() {
-    float milliseconds = 0;
-    cudaEvent_t start, stop;
-    cudaEventCreate(&start);
-    cudaEventCreate(&stop);
-
-    cudaEventRecord(start);
+    auto start = chrono::steady_clock::now();
 
 
 
@@ -101,8 +98,9 @@ int main() {
             std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
-    cudaEventRecord(stop);
-    cudaEventElapsedTime(&milliseconds, start, stop);
-    std::cerr << "milliseconds: " << milliseconds << "\n";
+    auto end = chrono::steady_clock::now();
+    std::cerr << "Elapsed time in milliseconds : " 
+		<< chrono::duration_cast<chrono::milliseconds>(end - start).count()
+		<< " ms" << endl;
 
 }
