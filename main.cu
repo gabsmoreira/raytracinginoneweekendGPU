@@ -15,7 +15,7 @@ __device__ vec3 color(const ray& r, hitable *world) {
     }
 }
 
-__global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *world, hitable **list){
+__global__ void kernel_function(float *pixels, int lenX, int lenY, hitable **world){
     printf("hola, im in bro\n");
     // int i = blockIdx.x * blockDim.x + threadIdx.x;
     // int j = blockIdx.y * blockDim.y + threadIdx.y;
@@ -77,7 +77,7 @@ int main() {
     cudaGetLastError();
     printf("depois\n");
     // chamando a funcao que calcula os pixels
-    kernel_function<<<blocks, threads>>>(pixels, nx, ny, world, list);
+    kernel_function<<<blocks, threads>>>(pixels, nx, ny, world);
     cudaDeviceSynchronize();
     // memcopy do pixel device -> host
     // cudaMemcpy(pixelsCPU, pixels, size_pixels, cudaMemcpyDeviceToHost);
