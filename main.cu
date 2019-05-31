@@ -39,8 +39,8 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
 
 __global__ void kernel_init(hitable **list, hitable **world){
     if (threadIdx.x == 0 && blockIdx.x == 0) {
-        *list[0] = new sphere(vec3(0,0,-1), 0.5);
-        *list[1] = new sphere(vec3(0,-100.5,-1), 100);
+        *(list) = new sphere(vec3(0,0,-1), 0.5);
+        *(list+1) = new sphere(vec3(0,-100.5,-1), 100);
         *world = new hitable_list(list, 2);
         printf("ola\n");
     }
