@@ -47,8 +47,8 @@ int main() {
     int ny = 80;
     int num_pixels = nx*ny;
     size_t size_pixels = 3*num_pixels*sizeof(float);
-    size_t size_list = 2*sizeof(hitable);
-    size_t size_world = sizeof(hitable);
+    size_t size_list = 2*sizeof(*hitable);
+    size_t size_world = sizeof(hitable_list);
     
     float *pixels;
     float *pixelsCPU;
@@ -68,6 +68,7 @@ int main() {
 
     // chamando o kernel init para criar hitable list e world
     kernel_init<<<1, 1>>>(&list, world);
+    printf('3')
 
     // sincronizar kernels
     cudaDeviceSynchronize();
