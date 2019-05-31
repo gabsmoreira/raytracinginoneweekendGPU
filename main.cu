@@ -49,6 +49,10 @@ int main() {
     float milliseconds = 0;
     cudaEvent_t start, stop;
     cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+
+    cudaEventRecord(start);
+
 
 
     int nx = 480;
@@ -97,7 +101,7 @@ int main() {
             std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
-    cudaEventCreate(&stop);
+    cudaEventRecord(stop);
     cudaEventElapsedTime(&milliseconds, start, stop);
     std::cerr << "milliseconds: " << milliseconds << "\n";
 
