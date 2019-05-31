@@ -47,7 +47,7 @@ int main() {
     int ny = 80;
     int num_pixels = nx*ny;
     size_t size_pixels = 3*num_pixels*sizeof(float);
-    size_t size_list = 2*sizeof(hitable);
+    size_t size_list = 2*sizeof(hitable *);
     size_t size_world = sizeof(hitable_list);
     
     float *pixels;
