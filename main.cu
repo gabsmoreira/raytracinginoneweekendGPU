@@ -41,6 +41,8 @@ __global__ void kernel_init(hitable **list, hitable *world){
     list[0] = new sphere(vec3(0,0,-1), 0.5);
     list[1] = new sphere(vec3(0,-100.5,-1), 100);
     world = new hitable_list(list, 2);
+    printf("ola");
+
 }
 
 int main() {
@@ -65,29 +67,21 @@ int main() {
     // definindo threads
     dim3 threads(8,8);
 
-   
-
     // chamando o kernel init para criar hitable list e world
     kernel_init<<<1, 1>>>(&list, world);
-    printf("ola");
 
     // sincronizar kernels
-    // cudaDeviceSynchronize();
-
+    
     // chamando a funcao que calcula os pixels
     kernel_function<<<blocks, threads>>>(pixels, nx, ny, world, &list);
+    cudaDeviceSynchronize();
 
     // memcopy do pixel device -> host
     cudaMemcpy(pixelsCPU, pixels, size_pixels, cudaMemcpyDeviceToHost);
 
     cudaGetLastError();
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
-    // vec3 lower_left_corner(-2.0, -1.0, -1.0);
-    // vec3 horizontal(4.0, 0.0, 0.0);
-    // vec3 vertial(0.0, 2.0, 0.0);
-    // vec3 origin(0.0, 0.0, 0.0);
-    // list[0] = new sphere(vec3(0,0,-1), 0.5);
-    // list[1] = new sphere(vec3(0,-100.5,-1), 100);
+
     for (int j = ny-1; j >= 0; j--) {
         for (int i = 0; i < nx; i++) {
             int index = j*3*nx + i*3;
