@@ -48,9 +48,9 @@ __global__ void kernel_init(hitable **list, hitable **world){
 int main() {
     int nx = 120;
     int ny = 80;
-    int num_pixels = nx*ny;
-    size_t size_pixels = 3*num_pixels*sizeof(float);
-    size_t size_list = 3*sizeof(hitable *);
+    int num_pixels = nx * ny;
+    size_t size_pixels = 3 * num_pixels*sizeof(float);
+    size_t size_list = 4 * sizeof(hitable *);
     size_t size_world = sizeof(hitable *);
     
     float *pixels;
