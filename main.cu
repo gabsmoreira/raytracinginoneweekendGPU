@@ -42,7 +42,6 @@ __global__ void kernel_init(hitable **list, hitable **world){
         *(list+1) = new sphere(vec3(0,-100.5,-1), 100);
         *(list+2) = new sphere(vec3(1, 0,-1), 50);
         *world = new hitable_list(list, 3);
-        printf("ola\n");
     }
 
 }
@@ -71,11 +70,9 @@ int main() {
 
     // chamando o kernel init para criar hitable list e world
     kernel_init<<<1, 1>>>(list, world);
-    printf("antes\n");
     // sincronizar kernels
     cudaDeviceSynchronize();
     cudaGetLastError();
-    printf("depois\n");
     // chamando a funcao que calcula os pixels
     kernel_function<<<blocks, threads>>>(pixels, nx, ny, world);
     cudaDeviceSynchronize();
