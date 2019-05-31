@@ -48,7 +48,7 @@ __global__ void kernel_init(hitable **list, hitable **world){
 }
 
 int main() {
-    auto start = chrono::steady_clock::now();
+    auto start = std::chrono::steady_clock::now();
 
 
 
@@ -98,9 +98,9 @@ int main() {
             std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
-    auto end = chrono::steady_clock::now();
-    std::cerr << "Elapsed time in milliseconds : " 
-		<< chrono::duration_cast<chrono::milliseconds>(end - start).count()
-		<< " ms" << endl;
+    auto end = std::chrono::steady_clock::now();
+    std::cerr << "Elapsed time in seconds : " 
+		<< std::chrono::duration<double>(end - start).count()
+		<< " s" << std::endl;
 
 }
