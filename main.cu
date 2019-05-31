@@ -23,7 +23,7 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
     vec3 horizontal(4.0, 0.0, 0.0);
     vec3 vertical(0.0, 2.0, 0.0);
     vec3 origin(0.0, 0.0, 0.0);
-    // printf("%d\n", list[0]);
+    printf("hehe\n");
     if((i >= lenX) || (j >= lenY)) return;
 
     float u = float(i) / float(lenX);
