@@ -28,7 +28,7 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable **wor
     float u = float(i) / float(lenX);
     float v = float(j) / float(lenY);
     ray r(origin, lower_left_corner + u*horizontal + v*vertical);
-    vec3 col = color(r, world);
+    vec3 col = color(r, *world);
     
     index = i*3 + j*lenX*3;
     pixels[index + 0] = col[0];
