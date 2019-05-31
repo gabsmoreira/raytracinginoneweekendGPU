@@ -3,7 +3,7 @@
 #include "hitable_list.h"
 #include "float.h"
 
-vec3 color(const ray& r, hitable *world) {
+__device__ vec3 color(const ray& r, hitable *world) {
     hit_record rec;
     if (world->hit(r, 0.0, MAXFLOAT, rec)) {
         return 0.5*vec3(rec.normal.x()+1, rec.normal.y()+1, rec.normal.z()+1);
@@ -47,8 +47,8 @@ int main() {
     int ny = 80;
     int num_pixels = nx*ny;
     size_t size_pixels = 3*num_pixels*sizeof(float);
-    size_t size_list = 2*sizeof(hitable *);
-    size_t size_world = sizeof(hitable *);
+    size_t size_list = 2*sizeof(hitable);
+    size_t size_world = sizeof(hitable);
     
     float *pixels;
     float *pixelsCPU;
