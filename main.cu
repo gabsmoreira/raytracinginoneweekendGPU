@@ -54,7 +54,7 @@ int main() {
     float *pixelsCPU;
     hitable *list[2];
     hitable *world;
-    cudaMallocManaged((void **)&pixel, size_pixels);
+    cudaMallocManaged((void **)&pixels, size_pixels);
     cudaMallocManaged((void **)&list, size_list);
     cudaMallocManaged((void **)&world, size_world);
 
@@ -74,7 +74,7 @@ int main() {
     kernel_function<<<blocks, threads>>>(pixels, nx, ny, world);
 
     // memcopy do pixel device -> host
-    cudaMemcpy(pixels, pixelsCPU, size, cudaMemcpyDeviceToHost);
+    cudaMemcpy(pixelsCPU, pixels, size_pixels, cudaMemcpyDeviceToHost);
 
     cudaGetLastError();
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
