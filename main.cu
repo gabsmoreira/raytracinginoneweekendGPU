@@ -57,6 +57,7 @@ int main() {
     float *pixelsCPU;
     hitable **list;
     hitable **world;
+    pixelsCPU = (float *)malloc(size_pixels);
     cudaMalloc((void **)&pixels, size_pixels);
     cudaMalloc((void **)&list, size_list);
     cudaMalloc((void **)&world, size_world);
