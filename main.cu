@@ -15,7 +15,7 @@ __device__ vec3 color(const ray& r, hitable *world) {
     }
 }
 
-__global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *world){
+__global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *world, hitable **list){
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int index;
@@ -23,6 +23,7 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
     vec3 horizontal(4.0, 0.0, 0.0);
     vec3 vertical(0.0, 2.0, 0.0);
     vec3 origin(0.0, 0.0, 0.0);
+    printf("%d\n", list[0].radius)
     if((i >= lenX) || (j >= lenY)) return;
 
     float u = float(i) / float(lenX);
@@ -74,7 +75,7 @@ int main() {
     cudaDeviceSynchronize();
 
     // chamando a funcao que calcula os pixels
-    kernel_function<<<blocks, threads>>>(pixels, nx, ny, world);
+    kernel_function<<<blocks, threads>>>(pixels, nx, ny, world, &list);
 
     // memcopy do pixel device -> host
     cudaMemcpy(pixelsCPU, pixels, size_pixels, cudaMemcpyDeviceToHost);
