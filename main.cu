@@ -68,7 +68,7 @@ int main() {
 
     // chamando o kernel init para criar hitable list e world
     kernel_init<<<1, 1>>>(&list, world);
-    printf('3')
+    printf('3');
 
     // sincronizar kernels
     cudaDeviceSynchronize();
