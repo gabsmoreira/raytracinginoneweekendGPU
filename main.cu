@@ -16,25 +16,25 @@ __device__ vec3 color(const ray& r, hitable *world) {
 }
 
 __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *world, hitable **list){
-    // int i = blockIdx.x * blockDim.x + threadIdx.x;
-    // int j = blockIdx.y * blockDim.y + threadIdx.y;
-    // int index;
-    // vec3 lower_left_corner(-2.0, -1.0, -1.0);
-    // vec3 horizontal(4.0, 0.0, 0.0);
-    // vec3 vertical(0.0, 2.0, 0.0);
-    // vec3 origin(0.0, 0.0, 0.0);
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
+    int index;
+    vec3 lower_left_corner(-2.0, -1.0, -1.0);
+    vec3 horizontal(4.0, 0.0, 0.0);
+    vec3 vertical(0.0, 2.0, 0.0);
+    vec3 origin(0.0, 0.0, 0.0);
     printf("hehe\n");
-    // if((i >= lenX) || (j >= lenY)) return;
+    if((i >= lenX) || (j >= lenY)) return;
 
-    // float u = float(i) / float(lenX);
-    // float v = float(j) / float(lenY);
-    // ray r(origin, lower_left_corner + u*horizontal + v*vertical);
-    // vec3 col = color(r, world);
+    float u = float(i) / float(lenX);
+    float v = float(j) / float(lenY);
+    ray r(origin, lower_left_corner + u*horizontal + v*vertical);
+    vec3 col = color(r, world);
     
-    // index = i*3 + j*lenX*3;
-    // pixels[index + 0] = col[0];
-    // pixels[index + 1] = col[1];
-    // pixels[index + 2] = col[2];
+    index = i*3 + j*lenX*3;
+    pixels[index + 0] = col[0];
+    pixels[index + 1] = col[1];
+    pixels[index + 2] = col[2];
 }
 
 __global__ void kernel_init(hitable **list, hitable *world){
@@ -72,7 +72,7 @@ int main() {
     printf("ola");
 
     // sincronizar kernels
-    cudaDeviceSynchronize();
+    // cudaDeviceSynchronize();
 
     // chamando a funcao que calcula os pixels
     kernel_function<<<blocks, threads>>>(pixels, nx, ny, world, &list);
