@@ -52,8 +52,8 @@ int main() {
     
     float *pixels;
     float *pixelsCPU;
-    hitable *list[2];
-    hitable *world;
+    hitable **list[2];
+    hitable **world;
     cudaMallocManaged((void **)&pixels, size_pixels);
     cudaMallocManaged((void **)&list, size_list);
     cudaMallocManaged((void **)&world, size_world);
