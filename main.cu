@@ -60,8 +60,8 @@ int main() {
     hitable *list;
     hitable *world;
     cudaMallocManaged((void **)&pixels, size_pixels);
-    cudaMallocManaged((void **)&list, size_list);
-    cudaMallocManaged((void **)&world, size_world);
+    cudaMalloc((void **)&list, size_list);
+    cudaMalloc((void **)&world, size_world);
 
     // definindo o tamanho do bloco
     dim3 blocks(nx/8+1,ny/8+1);
@@ -84,7 +84,6 @@ int main() {
 
     cudaGetLastError();
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
-
     for (int j = ny-1; j >= 0; j--) {
         for (int i = 0; i < nx; i++) {
             int index = j*3*nx + i*3;
