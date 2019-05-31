@@ -37,6 +37,8 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
 }
 
 __global__ void kernel_init(hitable *list, hitable *world){
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
     list[0] = new sphere(vec3(0,0,-1), 0.5);
     list[1] = new sphere(vec3(0,-100.5,-1), 100);
     world = new hitable_list(list, 2);
@@ -64,8 +66,10 @@ int main() {
     // definindo threads
     dim3 threads(8,8);
 
+   
+
     // chamando o kernel init para criar hitable list e world
-    kernel_init<<<blocks, threads>>>(list, world);
+    kernel_init<<<1, 1>>>(list, world);
 
     // sincronizar kernels
     cudaDeviceSynchronize();
