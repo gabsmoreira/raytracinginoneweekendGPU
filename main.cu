@@ -25,8 +25,8 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
     vec3 origin(0.0, 0.0, 0.0);
     if((i >= lenX) || (j >= lenY)) return;
 
-    float u = float(i) / float(nx);
-    float v = float(j) / float(ny);
+    float u = float(i) / float(lenX);
+    float v = float(j) / float(lenY);
     ray r(origin, lower_left_corner + u*horizontal + v*vertical);
     vec3 col = color(r, world);
     
