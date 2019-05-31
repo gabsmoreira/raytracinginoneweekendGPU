@@ -40,7 +40,8 @@ __global__ void kernel_init(hitable **list, hitable **world){
     if (threadIdx.x == 0 && blockIdx.x == 0) {
         *(list) = new sphere(vec3(0,0,-1), 0.5);
         *(list+1) = new sphere(vec3(0,-100.5,-1), 100);
-        *world = new hitable_list(list, 2);
+        *(list+2) = new sphere(vec3(20,-100.5,-10), 100);
+        *world = new hitable_list(list, 3);
         printf("ola\n");
     }
 
@@ -51,7 +52,7 @@ int main() {
     int ny = 80;
     int num_pixels = nx*ny;
     size_t size_pixels = 3*num_pixels*sizeof(float);
-    size_t size_list = 2*sizeof(hitable *);
+    size_t size_list = 3*sizeof(hitable *);
     size_t size_world = sizeof(hitable *);
     
     float *pixels;
