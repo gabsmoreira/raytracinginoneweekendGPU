@@ -37,11 +37,11 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
     pixels[index + 2] = col[2];
 }
 
-__global__ void kernel_init(hitable **list, hitable **world){
+__global__ void kernel_init(hitable **list, hitable *world){
     list[0] = new sphere(vec3(0,0,-1), 0.5);
     list[1] = new sphere(vec3(0,-100.5,-1), 100);
     world = new hitable_list(list, 2);
-    printf("ola");
+    printf("ola\n");
 
 }
 
@@ -68,7 +68,7 @@ int main() {
     dim3 threads(8,8);
 
     // chamando o kernel init para criar hitable list e world
-    kernel_init<<<1, 1>>>(&list, &world);
+    kernel_init<<<1, 1>>>(&list, world);
 
     // sincronizar kernels
     cudaDeviceSynchronize();
