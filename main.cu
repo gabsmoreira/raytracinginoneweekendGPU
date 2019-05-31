@@ -21,13 +21,13 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
     int index;
     vec3 lower_left_corner(-2.0, -1.0, -1.0);
     vec3 horizontal(4.0, 0.0, 0.0);
-    vec3 vertial(0.0, 2.0, 0.0);
+    vec3 vertical(0.0, 2.0, 0.0);
     vec3 origin(0.0, 0.0, 0.0);
     if((i >= lenX) || (j >= lenY)) return;
 
     float u = float(i) / float(nx);
     float v = float(j) / float(ny);
-    ray r(origin, lower_left_corner + u*horizontal + v*vertial);
+    ray r(origin, lower_left_corner + u*horizontal + v*vertical);
     vec3 col = color(r, world);
     
     index = i*3 + j*lenX*3;
@@ -39,7 +39,7 @@ __global__ void kernel_function(float *pixels, int lenX, int lenY, hitable *worl
 __global__ void kernel_init(hitable *list, hitable *world){
     list[0] = new sphere(vec3(0,0,-1), 0.5);
     list[1] = new sphere(vec3(0,-100.5,-1), 100);
-    hitable *world = new hitable_list(list,2);
+    world = new hitable_list(list,2);
 }
 
 int main() {
